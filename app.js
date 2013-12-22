@@ -21,7 +21,8 @@
   });
 
   var mainRoutes = require('./routes/main.js');
-  server.get('/:interval', mainRoutes.main);
+  server.get('/status/:interval', mainRoutes.main);
   server.post('/ping', mainRoutes.ping);
   server.get('/getStatus/:interval', mainRoutes.getStatus);
+  server.get('/initDB', mainRoutes.initDB);
 }());
