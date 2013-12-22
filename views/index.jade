@@ -1,0 +1,34 @@
+doctype
+html
+    head
+        meta(charset='utf-8')
+        title STATUS
+        meta(name='description', content='')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        style
+          .info {
+              color: white;
+              text-align: center;
+              margin: 0 auto;
+              padding: 20em 0 20em 0;
+          }
+          .statusOK {
+              background-color: green;
+          }
+          .statusNOK {
+              background-color: red;
+          }
+          h1 {
+              font-size: 7em;
+          }
+
+    - if (locals.status == 1)
+        body.statusOK
+            .info
+                h1 OK
+                h3 Last request: #{locals.lastRequestDate}
+    - else
+        body.statusNOK
+            .info
+                h1 NOOOOOOOOO!
+                h3 Last request: #{locals.lastRequestDate}
