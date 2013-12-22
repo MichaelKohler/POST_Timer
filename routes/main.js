@@ -31,7 +31,7 @@ exports.getStatus = function(req, res) {
         request.getStatus(response.lastRequestDate, interval, function(status) {
             response.status = status;
             res.json(JSON.stringify(response));
-            console.log("Status: " + JSON.stringify(response));
+            console.log("Status was requested: " + JSON.stringify(response));
             res.end();
         });
     });

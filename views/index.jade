@@ -25,12 +25,37 @@ html
     - if (locals.status == 1)
         body.statusOK
             .info
-                h1 OK
-                h3 Last request: #{locals.lastRequestDate.toLocaleDateString()} #{locals.lastRequestDate.toLocaleTimeString()}
+                h1.title OK
+                h3.request Last request: #{locals.lastRequestDate.toLocaleDateString()} #{locals.lastRequestDate.toLocaleTimeString()}
     - else
         body.statusNOK
             .info
-                h1 NOOOOOOOOO!
-                h3 Last request: #{locals.lastRequestDate.toLocaleDateString()} #{locals.lastRequestDate.toLocaleTimeString()}
+                h1.title NOOOOOOOOO!
+                h3.request Last request: #{locals.lastRequestDate.toLocaleDateString()} #{locals.lastRequestDate.toLocaleTimeString()}
     form(id='addform', method='POST', action='/ping')
         button(type='submit') Ping
+
+    script.
+        function updatePage() {
+            var request = new XMLHttpRequest();
+            request.open('GET', '/getStatus/#{locals.interval}', true);
+            request.send();
+            console.log("Request was sent: " + request.status);
+            if (request.status === "200") {
+                console.log("Request is okay: " + request.responseText);
+                var now = new Date();
+                var response = JSON.parse(request.responseText);
+                var title = document.querySelector(".title");
+                var lastrequest = document.querySelector(".request");
+                if (response.status) {
+                  title.value = "OK";
+                  document.querySelector("body").className = "statusOK";
+                }
+                else {
+                  title.value = "NOK";
+                  document.querySelector("body").className = "statusNOK";
+                }
+                lastrequest.value = "Last request:" + response.lastRequestDate.toLocaleDateString() + " " + response.lastRequestDate.toLocaleTimeString();
+            }
+        }
+        var intervalID = setInterval(updatePage, #{locals.interval * 1000});
