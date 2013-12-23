@@ -6,7 +6,7 @@ var db = new sqlite3.Database('requests.sqlite3');
 module.exports.getLastRequestDate = function (aInterval, aCallback) {
     db.serialize(function() {
         db.all("SELECT requestDate FROM requests ORDER BY `requestDate` DESC LIMIT 1", function(err, rows) {
-            if (rows.length > 0) {
+            if (rows && rows.length > 0) {
                 aCallback(new Date(rows[0].requestDate));
             }
             else {
