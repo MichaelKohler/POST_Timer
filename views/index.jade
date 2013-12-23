@@ -58,4 +58,4 @@ html
                 lastrequest.value = "Last request:" + response.lastRequestDate.toLocaleDateString() + " " + response.lastRequestDate.toLocaleTimeString();
             }
         }
-        var intervalID = setInterval(updatePage, #{locals.interval * 1000});
+        var intervalID = setInterval(updatePage, #{locals.interval * 60 * 1000});
